@@ -8,7 +8,10 @@ Release:	1
 License:	BSD
 Group:		Networking/Daemons
 Source0:	http://www.umich.edu/~umweb/downloads/mod_%{mod_name}-%{version}.tar.gz
+Source1:	%{name}.conf
+Source2:	http://www.umich.edu/~umweb/how-to/cgi-scripts/counter.html
 Patch0:		%{name}-configure.patch
+Patch1:		%{name}-symbols.patch
 URL:		http://modometer.org/
 BuildRequires:	%{apxs}
 BuildRequires:	apache(EAPI)-devel
@@ -41,6 +44,8 @@ oraz formatu obrazka: JPEG lub PNG.
 %prep
 %setup -q -n mod_%{mod_name}-%{version}
 %patch0 -p1
+%patch1 -p1
+cp %SOURCE2 .
 
 %build
 export LDFLAGS=" "
@@ -49,15 +54,19 @@ export LDFLAGS=" "
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_pkglibdir}
+install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_sysconfdir}}
 
 install mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
+install %SOURCE1 $RPM_BUILD_ROOT%{_sysconfdir}/mod_%{mod_name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 %{apxs} -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
+if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_ometer.conf" /etc/httpd/httpd.conf; then
+        echo "Include /etc/httpd/mod_ometer.conf" >> /etc/httpd/httpd.conf
+fi
 if [ -f /var/lock/subsys/httpd ]; then
 	/etc/rc.d/init.d/httpd restart 1>&2
 fi
@@ -65,6 +74,10 @@ fi
 %preun
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
+	umask 027
+	grep -v "^Include.*mod_ometer.conf" /etc/httpd/httpd.conf > \
+                /etc/httpd/httpd.conf.tmp
+        mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
 	if [ -f /var/lock/subsys/httpd ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
@@ -72,4 +85,6 @@ fi
 
 %files
 %defattr(644,root,root,755)
+%doc *.html
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mod_ometer.conf
 %attr(755,root,root) %{_pkglibdir}/*
