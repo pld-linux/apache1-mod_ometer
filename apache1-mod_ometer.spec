@@ -5,7 +5,7 @@ Summary(pl):	Modu³ do apache: licznik odwiedzin
 Name:		apache-mod_%{mod_name}
 Version:	1.2.0
 Release:	1
-License:	Apache
+License:	BSD
 Group:		Networking/Daemons
 Source0:	http://www.umich.edu/~umweb/downloads/mod_%{mod_name}-%{version}.tar.gz
 Patch0:		%{name}-configure.patch
