@@ -18,6 +18,7 @@ URL:		http://modometer.org/
 BuildRequires:	%{apxs}
 BuildRequires:	apache(EAPI)-devel
 BuildRequires:	libjpeg-devel
+BuildRequires:	gd-devel
 Requires(post,preun):	%{apxs}
 Requires(post,preun):	grep
 Requires(preun):	fileutils
