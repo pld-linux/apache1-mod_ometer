@@ -47,7 +47,7 @@ oraz formatu obrazka: JPEG lub PNG.
 %setup -q -n mod_%{mod_name}-%{version}
 %patch0 -p1
 %patch1 -p1
-cp %SOURCE2 .
+cp %{SOURCE2} .
 
 %build
 export LDFLAGS=" "
@@ -59,7 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_sysconfdir}}
 
 install mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
-install %SOURCE1 $RPM_BUILD_ROOT%{_sysconfdir}/mod_%{mod_name}.conf
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/mod_%{mod_name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
