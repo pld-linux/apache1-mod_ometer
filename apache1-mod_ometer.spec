@@ -8,6 +8,7 @@ Release:	1
 License:	BSD
 Group:		Networking/Daemons
 Source0:	http://www.umich.edu/~umweb/downloads/mod_%{mod_name}-%{version}.tar.gz
+# Source0-md5:	50b7b641409abd5d1a57077422fd444e
 Source1:	%{name}.conf
 Source2:	http://www.umich.edu/~umweb/how-to/cgi-scripts/counter.html
 Patch0:		%{name}-configure.patch
