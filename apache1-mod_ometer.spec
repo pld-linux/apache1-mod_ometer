@@ -11,6 +11,7 @@ Source0:	http://www.umich.edu/~umweb/downloads/mod_%{mod_name}-%{version}.tar.gz
 # Source0-md5:	50b7b641409abd5d1a57077422fd444e
 Source1:	%{name}.conf
 Source2:	http://www.umich.edu/~umweb/how-to/cgi-scripts/counter.html
+# Source2-md5:	6d6f56cec95c5fa2a28caf0ecb86b034
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-symbols.patch
 URL:		http://modometer.org/
