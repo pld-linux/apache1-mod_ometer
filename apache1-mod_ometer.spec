@@ -1,10 +1,12 @@
+# TODO
+#  - doesn't build. see rev 1.11
 %define		mod_name	ometer
 %define 	apxs		/usr/sbin/apxs1
 Summary:	Apache module: Web counter
 Summary(pl):	Modu³ do Apache: licznik odwiedzin
 Name:		apache1-mod_%{mod_name}
 Version:	1.2.0
-Release:	0.1
+Release:	0.2
 License:	BSD
 Group:		Networking/Daemons
 Source0:	http://www.umich.edu/~umweb/downloads/mod_%{mod_name}-%{version}.tar.gz
@@ -16,18 +18,15 @@ Patch0:		%{name}-configure.patch
 Patch1:		%{name}-symbols.patch
 URL:		http://modometer.org/
 BuildRequires:	%{apxs}
-BuildRequires:	apache1-devel
+BuildRequires:	apache1-devel >= 1.3.33-2
 BuildRequires:	libjpeg-devel
 BuildRequires:	gd-devel
-Requires(post,preun):	%{apxs}
-Requires(post,preun):	grep
-Requires(preun):	fileutils
-Requires:	apache1
+Requires:	apache1 >= 1.3.33-2
 Obsoletes:	apache-mod_%{mod_name} <= %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
-%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR)
+%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
+%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)
 
 %description
 mod_ometer is a Web counter implemented as an Apache C module. It uses
@@ -53,37 +52,31 @@ cp %{SOURCE2} .
 
 %build
 export LDFLAGS=" "
+
 %configure \
-	apxspath=%{apxs}
+	apxspath=%{apxs} \
+	found_apache=yes \
+
 %{__make} \
-	CFLAGS="%{rpmcflags} -I`%{apxs} -q INCLUDEDIR CFLAGS`"
+	CFLAGS="%{rpmcflags} -I$(%{apxs} -q INCLUDEDIR CFLAGS)"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_sysconfdir}}
+install -d $RPM_BUILD_ROOT{%{_pkglibdir},%{_sysconfdir}/conf.d}
 
 install mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/mod_%{mod_name}.conf
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/conf.d/90_mod_%{mod_name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{apxs} -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
-if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_ometer.conf" /etc/apache/apache.conf; then
-	echo "Include /etc/apache/mod_ometer.conf" >> /etc/apache/apache.conf
-fi
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 fi
 
 %preun
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
-	umask 027
-	grep -v "^Include.*mod_ometer.conf" /etc/apache/apache.conf > \
-		/etc/apache/apache.conf.tmp
-	mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
@@ -92,5 +85,5 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc *.html
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mod_ometer.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_%{mod_name}.conf
 %attr(755,root,root) %{_pkglibdir}/*
