@@ -82,8 +82,8 @@ if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
 	umask 027
 	grep -v "^Include.*mod_ometer.conf" /etc/apache/apache.conf > \
-                /etc/apache/apache.conf.tmp
-        mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
+		/etc/apache/apache.conf.tmp
+	mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
