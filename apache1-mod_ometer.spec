@@ -19,8 +19,8 @@ Patch1:		%{name}-symbols.patch
 URL:		http://modometer.org/
 BuildRequires:	%{apxs}
 BuildRequires:	apache1-devel >= 1.3.33-2
-BuildRequires:	libjpeg-devel
 BuildRequires:	gd-devel
+BuildRequires:	libjpeg-devel
 Requires:	apache1 >= 1.3.33-2
 Obsoletes:	apache-mod_%{mod_name} <= %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -85,5 +85,5 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc *.html
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_%{mod_name}.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_%{mod_name}.conf
 %attr(755,root,root) %{_pkglibdir}/*
