@@ -22,7 +22,7 @@ BuildRequires:	apache1-devel >= 1.3.33-2
 BuildRequires:	gd-devel
 BuildRequires:	libjpeg-devel
 Requires:	apache1 >= 1.3.33-2
-Obsoletes:	apache-mod_%{mod_name} <= %{version}
+Obsoletes:	apache-mod_%{mod_name} <= 1.2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
