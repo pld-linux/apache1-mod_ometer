@@ -3,7 +3,7 @@
 %define		mod_name	ometer
 %define 	apxs		/usr/sbin/apxs1
 Summary:	Apache module: Web counter
-Summary(pl):	Modu≥ do Apache: licznik odwiedzin
+Summary(pl.UTF-8):   Modu≈Ç do Apache: licznik odwiedzin
 Name:		apache1-mod_%{mod_name}
 Version:	1.2.0
 Release:	0.3
@@ -37,12 +37,12 @@ font choice, mod_ometer has all sorts of options for customizing the
 size, width, and color of your counter, as well as the ability to
 output the counter as JPEG or PNG.
 
-%description -l pl
-mod_ometer jest licznikiem odwiedzin dzia≥aj±cym jako modu≥ Apache'a
-uøywaj±cym biblioteki gd do generowania obrazkÛw. gd posiada kilka
-wbudowanych fontÛw, lecz w liczniku moøna uøyÊ dowolnych fontÛw
-TrueType. Poza moøliwo∂ci± wyboru kroju czcionki mod_ometer posiada
-opcje umoøliwiaj±ce zmianÍ szeroko∂ci, wysoko∂ci i kolorÛw licznika
+%description -l pl.UTF-8
+mod_ometer jest licznikiem odwiedzin dzia≈ÇajƒÖcym jako modu≈Ç Apache'a
+u≈ºywajƒÖcym biblioteki gd do generowania obrazk√≥w. gd posiada kilka
+wbudowanych font√≥w, lecz w liczniku mo≈ºna u≈ºyƒá dowolnych font√≥w
+TrueType. Poza mo≈ºliwo≈õciƒÖ wyboru kroju czcionki mod_ometer posiada
+opcje umo≈ºliwiajƒÖce zmianƒô szeroko≈õci, wysoko≈õci i kolor√≥w licznika
 oraz formatu obrazka: JPEG lub PNG.
 
 %prep
