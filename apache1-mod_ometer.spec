@@ -3,7 +3,7 @@
 %define		mod_name	ometer
 %define 	apxs		/usr/sbin/apxs1
 Summary:	Apache module: Web counter
-Summary(pl.UTF-8):   Moduł do Apache: licznik odwiedzin
+Summary(pl.UTF-8):	Moduł do Apache: licznik odwiedzin
 Name:		apache1-mod_%{mod_name}
 Version:	1.2.0
 Release:	0.3
