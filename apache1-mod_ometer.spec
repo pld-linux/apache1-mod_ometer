@@ -17,8 +17,7 @@ Source2:	http://www.umich.edu/~umweb/how-to/cgi-scripts/counter.html
 Patch0:		%{name}-configure.patch
 Patch1:		%{name}-symbols.patch
 URL:		http://modometer.org/
-BuildRequires:	apache1-apxs
-BuildRequires:	apache1-devel >= 1.3.33-2
+BuildRequires:	apache1-devel >= 1.3.39
 BuildRequires:	gd-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
