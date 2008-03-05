@@ -6,7 +6,7 @@ Summary:	Apache module: Web counter
 Summary(pl.UTF-8):	Moduł do Apache: licznik odwiedzin
 Name:		apache1-mod_%{mod_name}
 Version:	1.2.0
-Release:	0.3
+Release:	0.4
 License:	BSD
 Group:		Networking/Daemons
 Source0:	http://www.umich.edu/~umweb/downloads/mod_%{mod_name}-%{version}.tar.gz
@@ -21,7 +21,7 @@ BuildRequires:	apache1-devel >= 1.3.39
 BuildRequires:	gd-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires:	apache1 >= 1.3.33-2
+Requires:	apache1(EAPI)
 Obsoletes:	apache-mod_ometer <= 1.2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
